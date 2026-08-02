@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Steal an AI — GPU Tycoon</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div id="app">
+    <!-- Top Bar -->
+    <header class="top-bar">
+      <div class="currency-row" id="gpu-row">
+        <span class="currency-icon">🎮</span>
+        <span class="currency-label">GPU</span>
+        <span class="currency-value" id="gpu-coins">0</span>
+      </div>
+      <div class="currency-row" id="cpu-row">
+        <span class="currency-icon">🖥️</span>
+        <span class="currency-label">CPU</span>
+        <span class="currency-value" id="cpu-coins">0</span>
+        <button class="convert-btn" id="convert-btn" title="Convert CPU → GPU (10:1)">⇄</button>
+      </div>
+      <div class="currency-row" id="ram-row">
+        <span class="currency-icon">🧠</span>
+        <span class="currency-label">RAM</span>
+        <span class="currency-value" id="ram-coins">0</span>
+      </div>
+    </header>
+
+    <!-- Main Game Area -->
+    <main class="game-area">
+      <!-- Red Carpet Section -->
+      <section class="carpet-section" id="carpet-section">
+        <div class="carpet-header">
+          <h2>🎪 Red Carpet Recruitment</h2>
+          <div class="spawn-info">Next model in: <span id="spawn-timer">5.0</span>s</div>
+        </div>
+        <div class="carpet-track" id="carpet-track">
+          <div class="carpet-decoration"></div>
+        </div>
+        <div class="carpet-controls">
+          <button class="btn btn-speed" id="speed-btn">⏩ 1x</button>
+          <button class="btn btn-spawn" id="force-spawn-btn">🎲 Force Spawn (5 GPU)</button>
+        </div>
+      </section>
+
+      <!-- Base / Collection Section -->
+      <section class="base-section" id="base-section">
+        <div class="section-header">
+          <h2>🏠 Your AI Base</h2>
+          <div class="stats-summary">
+            <span>Models Owned: <strong id="owned-count">0</strong></span>
+            <span>CPU/sec: <strong id="cpu-per-sec">0</strong></span>
+          </div>
+        </div>
+        
+        <div class="tab-bar">
+          <button class="tab-btn active" data-tab="collection">📋 Collection</button>
+          <button class="tab-btn" data-tab="legends">✨ Legends</button>
+          <button class="tab-btn" data-tab="prestige">🔄 Prestige</button>
+        </div>
+
+        <!-- Collection Tab -->
+        <div class="tab-panel active" id="tab-collection">
+          <div class="model-grid" id="model-grid"></div>
+        </div>
+
+        <!-- Legends Tab -->
+        <div class="tab-panel" id="tab-legends">
+          <p class="legends-hint">Legendary models cost <span class="ram-coin">RAM Coins</span>. Earn RAM by prestiging or rare drops.</p>
+          <div class="model-grid" id="legend-grid"></div>
+        </div>
+
+        <!-- Prestige Tab -->
+        <div class="tab-panel" id="tab-prestige">
+          <div class="prestige-card">
+            <h3>🔄 Neural Reset</h3>
+            <p>Reset all models and currencies to gain <span class="ram-coin">RAM Coins</span> based on your total GPU earned.</p>
+            <div class="prestige-preview">
+              <div>Total GPU Earned (lifetime): <strong id="lifetime-gpu">0</strong></div>
+              <div>RAM Gain: <strong id="ram-gain">0</strong></div>
+              <div>Prestige Level: <strong id="prestige-level">0</strong></div>
+            </div>
+            <button class="btn btn-prestige" id="prestige-btn" disabled>PRESTIGE</button>
+            <p class="prestige-req" id="prestige-req">Need 1,000 lifetime GPU to prestige</p>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Notification Toast -->
+    <div class="toast-container" id="toast-container"></div>
+
+    -- Modal for Model Details --
+    <dialog class="model-modal" id="model-modal">
+      <div class="modal-content">
+        <button class="modal-close" id="modal-close">&times;</button>
+        <div class="modal-header">
+          <span class="modal-tier" id="modal-tier"></span>
+          <h3 id="modal-name"></h3>
+        </div>
+        <div class="modal-body">
+          <div class="modal-sprite" id="modal-sprite"></div>
+          <div class="modal-stats" id="modal-stats"></div>
+          <div class="modal-desc" id="modal-desc"></div>
+        </div>
+        <div class="modal-actions" id="modal-actions"></div>
+      </div>
+    </dialog>
+  </div>
+
+  <script src="game.js"></script>
+</body>
+</html>

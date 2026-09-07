@@ -104,8 +104,23 @@ class Game {
         }, 100);
     }
 
+    updateModelVisibility() {
+        this.models.forEach((model, index) => {
+            const modelRow = document.getElementById(`model-row-${model.id}`);
+            if (modelRow) {
+                const prevModel = this.models[index - 1];
+                const shouldBeVisible = index === 0 || 
+                                      (prevModel && prevModel.count > 0) || 
+                                      (this.ram >= model.baseCost * 0.5);
+
+                modelRow.style.display = shouldBeVisible ? 'flex' : 'none';
+            }
+        });
+    }
+
     updateUI() {
         this.updateModelVisibility();
+        
         const ramDisplay = document.getElementById('ram-display');
         const totalRamDisplay = document.getElementById('total-ram');
         const prestigeLevelDisplay = document.getElementById('prestige-level');
@@ -124,26 +139,6 @@ class Game {
             const countElement = document.getElementById(`count-${model.id}`);
             if (countElement) {
                 countElement.innerText = model.count || 0;
-            }
-        });
-    }
-
-    updateModelVisibility() {
-        this.models.forEach((model, index) => {
-            const modelRow = document.getElementById(`model-row-${model.id}`);
-            if (modelRow) {
-                // Show model if it's the first one, or if the previous model has been bought at least once,
-                // or if the player has enough RAM to afford it.
-                const prevModel = this.models[index - 1];
-                const shouldBeVisible = index === 0 || 
-                                      (prevModel && prevModel.count > 0) || 
-                                      (this.ram >= model.baseCost * 0.8);
-
-                if (shouldBeVisible) {
-                    modelRow.style.display = 'flex';
-                } else {
-                    modelRow.style.display = 'none';
-                }
             }
         });
     }
